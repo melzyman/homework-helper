@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Verification</title>
+</head>
+<body>
+    <h2>Verify Your Payment</h2>
+    <p>Enter the payment confirmation code given to you:</p>
+    <input type="text" id="paymentCode" placeholder="Enter your code">
+    <button onclick="verifyPayment()">Verify</button>
+
+    <script>
+        function verifyPayment() {
+            let code = document.getElementById("paymentCode").value;
+
+            // Example: List of valid codes with expiration (in days)
+            let validCodes = {
+                "ABC123": 7,  // 7 days of access
+                "XYZ789": 14  // 14 days of access
+            };
+
+            if (validCodes[code]) {
+                let expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + validCodes[code]);
+
+                localStorage.setItem("paymentVerified", "true");
+                localStorage.setItem("expirationDate", expirationDate.getTime());
+
+                alert("Payment verified! You have access until " + expirationDate.toDateString());
+            } else {
+                alert("Invalid code. Please try again.");
+            }
+        }
+    </script>
+</body>
+</html>
